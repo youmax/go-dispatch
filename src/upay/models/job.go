@@ -1,10 +1,5 @@
 package models
 
-// Payload interface for polymorphism
-type Payload interface {
-	Handle()
-}
-
 // Job represents the job to be run
 type Job struct {
 	Url       string
@@ -17,6 +12,3 @@ type Job struct {
 
 // JobChannel ...
 type JobChannel chan Job
-
-// WorkPool ...
-type WorkPool chan JobChannel

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"upay/models"
@@ -30,7 +31,15 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+	d := NewDispatcher(5)
+	d.Run()
 	var deposit models.Deposit
 	db.First(&deposit)
-	log.Println("Hello world")
+	job := models.Job{Payload: &deposit}
+	for i := 0; i < 100000; i++ {
+		d.PushJob(job)
+	}
+
+	var input string
+	fmt.Scanln(&input)
 }

@@ -30,7 +30,7 @@ func CreateSig(method string, uri string, secretkey string, param map[string]str
 	h := hmac.New(sha1.New, []byte(secretkey))
 	h.Write([]byte(sig))
 	sig = base64.StdEncoding.EncodeToString(h.Sum(nil))
-	return sig
+	return UrlEncode(sig)
 }
 
 func UrlEncode(s string) string {
