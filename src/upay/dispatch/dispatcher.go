@@ -1,4 +1,4 @@
-package main
+package dispatch
 
 import (
 	"log"
@@ -6,21 +6,21 @@ import (
 )
 
 type Dispatcher struct {
-	WorkerPool models.WorkPool
-	jobQueue   models.JobChannel
-	maxWorkers uint
+	WorkerPool  models.WorkPool
+	jobQueue    models.JobChannel
+	numOfWorker uint
 }
 
-func NewDispatcher(maxWorkers uint) *Dispatcher {
-	pool := make(models.WorkPool, maxWorkers)
+func NewDispatcher(num uint) *Dispatcher {
+	pool := make(models.WorkPool, num)
 	queue := make(models.JobChannel)
-	return &Dispatcher{WorkerPool: pool, maxWorkers: maxWorkers, jobQueue: queue}
+	return &Dispatcher{WorkerPool: pool, numOfWorker: num, jobQueue: queue}
 }
 
 // 初始化worker池，并启动woker池，并开始接受新的job
 func (d *Dispatcher) Run() {
 	var i uint
-	for ; i < d.maxWorkers; i++ {
+	for ; i < d.numOfWorker; i++ {
 		NewWorker(d.WorkerPool, i).Start()
 	}
 	go d.dispatch()

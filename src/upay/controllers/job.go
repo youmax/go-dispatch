@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"log"
+	app "upay/app"
 	"upay/models"
 	r "upay/responses"
 
@@ -8,10 +10,10 @@ import (
 )
 
 func Pong(c *gin.Context) {
-	var deposit models.Deposit
-	Db.First(&deposit)
+	var d models.Deposit
+	app.DB().First(&d)
+	log.Printf("%s", d)
 	c.JSON(r.NewResponse(200, map[string]interface{}{
-		"message": "hello world",
+		"message": d.Custid,
 	}))
-	return
 }

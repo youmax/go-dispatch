@@ -1,15 +1,9 @@
-package main
+package dispatch
 
 import (
 	"log"
-	"os"
 
 	"upay/models"
-)
-
-var (
-	MaxWorker = os.Getenv("MAX_WORKERS")
-	MaxQueue  = os.Getenv("MAX_QUEUE")
 )
 
 // Worker represents the worker that executes the job

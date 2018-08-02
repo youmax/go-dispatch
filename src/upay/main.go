@@ -1,14 +1,12 @@
 package main
 
 import (
-	"log"
-	"upay/models"
-
-	_ "github.com/go-sql-driver/mysql"
+	app "upay/app"
+	"upay/routes"
 )
 
 func main() {
-	var deposit models.Deposit
-	mDb.First(&deposit)
-	log.Println(deposit)
+	app := app.CreateApplication()
+	routes.SetRoutes(app)
+	app.Run()
 }
