@@ -3,16 +3,28 @@ package test
 import (
 	"net/url"
 	"testing"
-
 	"upay/utils"
 )
 
+type TestCase map[string]string
+
+var testInputs = [...]TestCase{
+	{"custid": "001", "method": "get", "url": "/orders/1", "key": "secret", "sig": "4RRcY51t9FPsJvx4bLgDNkdMqiA="}}
+
+func (t TestCase) remove(keys ...string) (vals []string) {
+	for _, key := range keys {
+		vals = append(vals, t[key])
+		delete(t, key)
+	}
+	return
+}
 func TestSig(t *testing.T) {
-	var param = make(map[string]string)
-	param["custid"] = "001"
-	sig := utils.CreateSig("GET", "/orders/1", "secret", param)
-	var ans = url.QueryEscape("4RRcY51t9FPsJvx4bLgDNkdMqiA=")
-	if sig != ans {
-		t.Errorf("Sig was incorrect, got: %s, want: %s.", sig, ans)
+	for _, v := range testInputs {
+		ans := url.QueryEscape(v["sig"])
+		slice := v.remove("method", "url", "key")
+		sig := utils.CreateSig(slice[0], slice[1], slice[2], v)
+		if sig != ans {
+			t.Errorf("Sig was incorrect, got: %s, want: %s.", sig, ans)
+		}
 	}
 }
