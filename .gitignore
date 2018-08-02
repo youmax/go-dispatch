@@ -29,6 +29,7 @@ _testmain.go
 /misc/cgo/stdio/run.out
 /misc/cgo/testso/main
 /pkg/*
+/src/*/vendor/*
 /test.out
 /test/garbage/*.out
 /test/pass.out

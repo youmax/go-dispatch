@@ -1,11 +1,14 @@
 # Go-Dispatch
 
-simple dispatch written by GO.It receive Http POST and put the request into job
-queue then assign to its worker.
+Simple dispatcher written by GO.
 
-## dev package
+The dispatcher receive job from Http POST and assign it to worker automatically.
 
-go get -u github.com/jinzhu/gorm
+## install dev package
+
+go get github.com/tools/godep
+
+godep restore
 
 ## build
 
