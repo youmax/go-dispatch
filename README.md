@@ -16,6 +16,6 @@ godep restore
 
 go install upay
 
-## test
+## Testing Your Application
 
-go test test_file
+$ go test -v ./tests

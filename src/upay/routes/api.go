@@ -9,7 +9,7 @@ import (
 // ApiRoutes
 var ApiRoutes *gin.RouterGroup = nil
 
-func SetRoutes(r *gin.Engine) {
+func SetupApiRoutes(r *gin.Engine) {
 	ApiRoutes = r.Group("v1")
 	{
 		r.GET("/job/ping", c.JobCtrl.Pong)
