@@ -6,7 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ApiRoutes
+var ApiRoutes *gin.RouterGroup = nil
+
 func SetRoutes(r *gin.Engine) {
-	r.NoRoute(c.ErrorController)
-	r.GET("/job/ping", c.Pong)
+	ApiRoutes = r.Group("v1")
+	{
+		r.GET("/job/ping", c.JobCtrl.Pong)
+	}
+
+	r.NoRoute(c.ErrorCtrl.Error)
+
 }

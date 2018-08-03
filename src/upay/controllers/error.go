@@ -6,11 +6,11 @@ import (
 	r "upay/responses"
 )
 
+type ErrorController struct{}
+
+var ErrorCtrl ErrorController = ErrorController{}
+
 // ErrorController handles error messages for wrong routes
-func ErrorController(c *gin.Context) {
-
-	c.JSON(r.ErrorMessage(r.ErrNotFound))
-
-	return
-
+func (ctrl *ErrorController) Error(c *gin.Context) {
+	c.JSON(r.NewError(r.ErrNotFound))
 }

@@ -2,6 +2,7 @@ package dispatch
 
 import (
 	"log"
+	"sync"
 	"upay/models"
 )
 
@@ -9,6 +10,14 @@ type Dispatcher struct {
 	WorkerPool  models.WorkPool
 	jobQueue    models.JobChannel
 	numOfWorker uint
+}
+
+var mutex = &sync.Mutex{}
+var dispatcher *Dispatcher = nil
+
+func init() {
+	dispatcher = NewDispatcher(5)
+	dispatcher.Run()
 }
 
 func NewDispatcher(num uint) *Dispatcher {
@@ -47,4 +56,10 @@ func (d *Dispatcher) PushJob(job models.Job) {
 	go func() {
 		d.jobQueue <- job
 	}()
+}
+
+func GetDispatcher() *Dispatcher {
+	mutex.Lock()
+	defer mutex.Unlock()
+	return dispatcher
 }
