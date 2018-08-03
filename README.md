@@ -8,9 +8,9 @@ The dispatcher receive job from Http POST and assign it to worker automatically.
 
 cd src/upay
 
-go get github.com/tools/godep
+go get github.com/Masterminds/glide
 
-godep restore
+glide install
 
 ## build
 
