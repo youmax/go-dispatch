@@ -2,11 +2,13 @@ package tests
 
 import (
 	"testing"
-	db "upay/databases"
+	"upay/configs"
+	"upay/databases"
 )
 
 func TestDBConection(t *testing.T) {
-	if db.Mysql() == nil {
-		t.Errorf("db is null")
+	db := database.SetupDBConnection(configs.DbConfig())
+	if db == nil {
+		t.Error("db is nil")
 	}
 }

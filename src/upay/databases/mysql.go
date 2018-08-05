@@ -12,7 +12,11 @@ import (
 var mutex = &sync.Mutex{}
 var mysql *gorm.DB = nil
 
-func Init(config *configs.Database) {
+func init() {
+	mysql = SetupDBConnection(configs.DbConfig())
+}
+
+func SetupDBConnection(config *configs.Database) *gorm.DB {
 	if config == nil {
 		panic("database config is nil")
 	}
@@ -22,7 +26,7 @@ func Init(config *configs.Database) {
 	if err != nil {
 		panic(err)
 	}
-	mysql = db
+	return db
 }
 
 func Mysql() *gorm.DB {

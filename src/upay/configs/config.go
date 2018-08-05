@@ -1,6 +1,10 @@
 package configs
 
-import "upay/envs"
+import (
+	"os"
+	"strings"
+	"upay/envs"
+)
 
 type Database struct {
 	Host     string
@@ -12,8 +16,14 @@ type Database struct {
 
 var db *Database
 
-func Init() {
-	config := envs.Development
+func init() {
+	mode := os.Getenv("DISPATCH_ENV")
+	var config map[string]string
+	if strings.ToUpper(mode) == "PRODUCTION" {
+		config = envs.Production
+	} else {
+		config = envs.Development
+	}
 	db = LoadDatabaseConfiguration(config)
 }
 
@@ -27,6 +37,6 @@ func LoadDatabaseConfiguration(config map[string]string) *Database {
 	return &database
 }
 
-func DB() *Database {
+func DbConfig() *Database {
 	return db
 }

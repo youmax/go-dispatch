@@ -1,8 +1,8 @@
 package app
 
 import (
-	"upay/configs"
-	database "upay/databases"
+	"log"
+	"upay/databases"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,9 +10,18 @@ import (
 var router *gin.Engine
 
 func CreateApplication() *gin.Engine {
-
-	configs.Init()
-	database.Init(configs.DB())
 	router := gin.Default()
 	return router
+}
+
+func Exception() {
+	if err := recover(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func Close() {
+	if database.Mysql() != nil {
+		defer database.Mysql().Close()
+	}
 }

@@ -7,18 +7,16 @@ import (
 	"os"
 	"os/signal"
 	"time"
-	app "upay/app"
+	"upay/app"
 	"upay/routes"
 )
 
-func exception() {
-	if err := recover(); err != nil {
-		log.Print(err)
-	}
-}
 func main() {
-	defer exception()
+
 	router := app.CreateApplication()
+	defer app.Exception()
+	defer app.Close()
+
 	routes.SetupApiRoutes(router)
 	server := &http.Server{
 		Addr:    ":8080",
